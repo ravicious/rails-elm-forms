@@ -1,0 +1,17 @@
+Rails:
+  Enabled: true
+
+Metrics/LineLength:
+  Max: 130
+  AllowURI: true
+  AllowHeredoc: true
+
+Style/Documentation:
+  Enabled: false
+
+AllCops:
+  TargetRubyVersion: 2.3
+  Exclude:
+    - 'bin/*'
+    - 'config/**/*'
+    - 'config.ru'
