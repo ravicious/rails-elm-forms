@@ -2,7 +2,7 @@ Rails:
   Enabled: true
 
 Metrics/LineLength:
-  Max: 130
+  Max: 100
   AllowURI: true
   AllowHeredoc: true
 
