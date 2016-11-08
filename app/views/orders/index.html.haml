@@ -1,0 +1,31 @@
+%p#notice= notice
+%h1 Orders
+%table.table.table-stripe
+  %thead
+    %tr
+      %th ID
+      %th Product
+      %th Quantity
+      %th Unit price
+      %th Shipping price
+      %th Total price
+      %th Options
+      %th Customer name
+      %th Customer email
+      %th{colspan: 2}
+  %tbody
+    - @orders.each do |order|
+      %tr
+        %td= order.id
+        %td= order.product.name
+        %td= order.quantity
+        %td= number_to_currency order.unit_price
+        %td= number_to_currency order.shipping_price
+        %td= number_to_currency order.total_price
+        %td= order.options
+        %td= order.customer_name
+        %td= order.customer_email
+        %td= link_to 'Edit', edit_order_path(order)
+        %td= link_to 'Destroy', order, method: :delete, data: { confirm: 'Are you sure?' }
+%br/
+= link_to 'New Order', new_order_path

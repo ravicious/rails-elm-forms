@@ -31,3 +31,15 @@ Product.transaction do
     end
   end
 end
+
+if Order.none?
+  Order.create!(
+    product: Product.find_by!(name: 'Tea'),
+    quantity: 15,
+    options: { 'kind' => 'green' },
+    unit_price: 15,
+    shipping_price: 20,
+    customer_name: 'Alice Doe',
+    customer_email: 'alice@example.com'
+  )
+end
