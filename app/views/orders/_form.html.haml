@@ -1,3 +1,5 @@
+#order_form
+
 = form_for(order) do |f|
   - if order.errors.any?
     #error_explanation
@@ -51,3 +53,5 @@
         = f.email_field :customer_email, class: 'form-control'
   .actions
     = f.submit class: 'btn btn-default'
+
+= javascript_include_tag 'order_form'

@@ -42,3 +42,8 @@ bower.json
 
 # Ignore Byebug command history file.
 .byebug_history
+
+# Per our convention, *.elm.js files are files compiled by elm-make.
+# They are supposed to be loaded through Sprockets `//= require`
+# in regular JS files found in app/assets/javascripts.
+app/assets/javascripts/*.elm.js

@@ -1,24 +1,26 @@
-# README
+# rails-elm-forms
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This project explores ways in which an Elm app can be integrated with an existing Rails application.
 
-Things you may want to cover:
+# Conventions
 
-* Ruby version
+## Files compiled by `elm make` should have .elm.js extension.
 
-* System dependencies
+This has a couple of benefits. First, it's easier to ignore such files – they are build artifacts
+and we don't have to keep them in the repo. Second, imagine you create an Elm app for making
+an order form dynamic. You compile it to a file named `order_form.js`. But to run an Elm app
+compiled to JS, you need to embed it on the page by calling `Elm.Main.embed`. How are you going to
+name the files which embeds the Elm app? `order_form_setup.js`? It's seems easier to just add
+the `.elm.js` extension to `elm make` artifacts.
 
-* Configuration
+# Compiling the Elm app
 
-* Database creation
+For now, you can compile it by issuing the following commands:
 
-* Database initialization
+```
+cd app/assets/javascripts/order_form
+elm make Main.elm --output ../order_form.elm.js
+```
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Later the compilation step is going to be solved either by using
+[elm-webpack-loader](https://github.com/rtfeldman/elm-webpack-loader) or a Makefile.
