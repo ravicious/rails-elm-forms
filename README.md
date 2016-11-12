@@ -19,8 +19,11 @@ For now, you can compile it by issuing the following commands:
 
 ```
 cd app/assets/javascripts/order_form
-elm make Main.elm --output ../order_form.elm.js
+make
 ```
 
-Later the compilation step is going to be solved either by using
-[elm-webpack-loader](https://github.com/rtfeldman/elm-webpack-loader) or a Makefile.
+`make watch` recompiles the app on each change to a `.elm` file in the app directory.
+
+For now we're not employing Google Closure Compiler for dead code removal.
+Later the compilation step is going to be solved by using
+[elm-webpack-loader](https://github.com/rtfeldman/elm-webpack-loader) or a similar tool.
