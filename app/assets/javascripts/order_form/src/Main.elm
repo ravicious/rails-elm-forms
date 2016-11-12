@@ -6,6 +6,11 @@ import Html.Attributes as Attrs exposing (..)
 import Html.Events exposing (..)
 
 
+-- Our imports
+
+import Bootstrap exposing (defaultInputOptions)
+
+
 main : Program Never
 main =
     Html.App.beginnerProgram
@@ -96,79 +101,73 @@ view model =
             [ div
                 [ class "row" ]
                 [ div [ class "col-md-3" ]
-                    [ div [ class "form-group" ]
-                        [ label [ for "order_quantity" ] [ text "Quantity" ]
-                        , input
-                            [ type' "number"
-                            , id "order_quantity"
-                            , name "order_quantity"
-                            , onInput UpdateQuantity
-                            , class "form-control"
-                            , required True
-                            , Attrs.min "1"
-                            , step "1"
+                    [ Bootstrap.formGroup "order" "quantity" <|
+                        \fieldId fieldName ->
+                            [ Bootstrap.label fieldId "Quantity"
+                            , Bootstrap.input
+                                [ id fieldId
+                                , name fieldName
+                                , type' "number"
+                                , onInput UpdateQuantity
+                                , required True
+                                , Attrs.min "1"
+                                , step "1"
+                                ]
                             ]
-                            []
-                        ]
                     ]
                 ]
             , div
                 [ class "row" ]
                 [ div [ class "col-md-3" ]
-                    [ div
-                        [ class "form-group" ]
-                        [ label [ for "order_unit_price" ] [ text "Unit price" ]
-                        , div [ class "input-group" ]
-                            [ span [ class "input-group-addon" ] [ text "$" ]
-                            , input
-                                [ type' "number"
-                                , id "order_unit_price"
-                                , name "order_unit_price"
+                    [ Bootstrap.formGroup "order" "unit_price" <|
+                        \fieldId fieldName ->
+                            [ Bootstrap.label fieldId "Unit price"
+                            , Bootstrap.inputWithOptions
+                                { defaultInputOptions
+                                    | prepend = "$"
+                                    , helpBlock =
+                                        Just <|
+                                            text "Please refer to our pricing guide for the optimal prices."
+                                }
+                                [ id fieldId
+                                , name fieldName
+                                , type' "number"
                                 , onInput UpdateUnitPrice
-                                , class "form-control"
                                 , required True
                                 , Attrs.min "0"
                                 , step "0.01"
                                 ]
-                                []
                             ]
-                        , span [ class "help-block" ]
-                            [ text "Please refer to our pricing guide for the optimal prices." ]
-                        ]
                     ]
                 ]
             , div
                 [ class "row" ]
                 [ div [ class "col-md-3" ]
-                    [ div
-                        [ class "form-group" ]
-                        [ label [ for "order_customer_name" ] [ text "Customer name" ]
-                        , input
-                            [ type' "text"
-                            , id "order_customer_name"
-                            , name "order_customer_name"
-                            , onInput UpdateCustomerName
-                            , class "form-control"
+                    [ Bootstrap.formGroup "order" "customer_name" <|
+                        \fieldId fieldName ->
+                            [ Bootstrap.label fieldId "Customer name"
+                            , Bootstrap.input
+                                [ id fieldId
+                                , name fieldName
+                                , type' "text"
+                                , onInput UpdateCustomerName
+                                ]
                             ]
-                            []
-                        ]
                     ]
                 ]
             , div
                 [ class "row" ]
                 [ div [ class "col-md-3" ]
-                    [ div
-                        [ class "form-group" ]
-                        [ label [ for "order_customer_email" ] [ text "Customer email" ]
-                        , input
-                            [ type' "email"
-                            , id "order_customer_email"
-                            , name "order_customer_email"
-                            , onInput UpdateCustomerEmail
-                            , class "form-control"
+                    [ Bootstrap.formGroup "order" "customer_email" <|
+                        \fieldId fieldName ->
+                            [ Bootstrap.label fieldId "Customer email"
+                            , Bootstrap.input
+                                [ id fieldId
+                                , name fieldName
+                                , type' "email"
+                                , onInput UpdateCustomerEmail
+                                ]
                             ]
-                            []
-                        ]
                     ]
                 ]
             , div
