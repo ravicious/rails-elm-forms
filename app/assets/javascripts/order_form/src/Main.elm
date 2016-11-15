@@ -1,6 +1,5 @@
 module Main exposing (main)
 
-import Html.App
 import Html exposing (..)
 import Html.Attributes as Attrs exposing (..)
 import Html.Events exposing (..)
@@ -11,9 +10,9 @@ import Html.Events exposing (..)
 import Bootstrap exposing (defaultInputOptions)
 
 
-main : Program Never
+main : Program Never Model Msg
 main =
-    Html.App.beginnerProgram
+    Html.beginnerProgram
         { model = init
         , view = view
         , update = update
@@ -107,7 +106,7 @@ view model =
                             , Bootstrap.input
                                 [ id fieldId
                                 , name fieldName
-                                , type' "number"
+                                , type_ "number"
                                 , onInput UpdateQuantity
                                 , required True
                                 , Attrs.min "1"
@@ -131,7 +130,7 @@ view model =
                                 }
                                 [ id fieldId
                                 , name fieldName
-                                , type' "number"
+                                , type_ "number"
                                 , onInput UpdateUnitPrice
                                 , required True
                                 , Attrs.min "0"
@@ -149,7 +148,7 @@ view model =
                             , Bootstrap.input
                                 [ id fieldId
                                 , name fieldName
-                                , type' "text"
+                                , type_ "text"
                                 , onInput UpdateCustomerName
                                 ]
                             ]
@@ -164,7 +163,7 @@ view model =
                             , Bootstrap.input
                                 [ id fieldId
                                 , name fieldName
-                                , type' "email"
+                                , type_ "email"
                                 , onInput UpdateCustomerEmail
                                 ]
                             ]
@@ -173,7 +172,7 @@ view model =
             , div
                 [ class "row" ]
                 [ div [ class "col-md-3" ]
-                    [ button [ type' "submit", class "btn btn-default" ]
+                    [ button [ type_ "submit", class "btn btn-default" ]
                         [ text "Submit"
                         ]
                     ]
