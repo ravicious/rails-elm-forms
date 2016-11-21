@@ -1,9 +1,0 @@
-# elm-stuff if Elm's equivalent of npm's node_modules.
-/elm-stuff/*
-
-# exact-dependencies.json is Elm's equivalent of Ruby's Gemfile.lock.
-# Since we're developing an app, we want to keep the exact dependencies in sync.
-# Thus, we whitelist this file.
-!/elm-stuff/exact-dependencies.json
-
-repl-temp-*

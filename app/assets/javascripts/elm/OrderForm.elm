@@ -1,4 +1,4 @@
-module Main exposing (main)
+module OrderForm exposing (main)
 
 import Html exposing (..)
 import Html.Attributes as Attrs exposing (..)

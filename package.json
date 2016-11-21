@@ -1,0 +1,31 @@
+{
+  "name": "rails-elm-forms",
+  "version": "1.0.0",
+  "description": "This project explores ways in which an Elm app can be integrated with an existing Rails application.",
+  "main": "index.js",
+  "scripts": {
+    "webpack-dev-build": "$(npm bin)/webpack --config config/webpack/development.config.js --colors --progress",
+    "webpack-watch": "$(npm bin)/webpack --config config/webpack/development.config.js --watch --colors --progress",
+    "postinstall": "$(npm bin)/webpack --config config/webpack/production.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ravicious/rails-elm-forms.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ravicious/rails-elm-forms/issues"
+  },
+  "homepage": "https://github.com/ravicious/rails-elm-forms#readme",
+  "dependencies": {
+    "elm": "^0.18.0",
+    "elm-webpack-loader": "^3.0.6",
+    "path": "^0.12.7",
+    "webpack": "^1.13.3",
+    "webpack-merge": "^0.17.0"
+  },
+  "devDependencies": {
+    "bell-on-bundler-error-plugin": "^1.0.8"
+  }
+}
