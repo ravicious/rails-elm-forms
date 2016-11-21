@@ -32,6 +32,14 @@ It's easier to ignore all `*.webpack.js` files in .gitignore than add a new .git
 for each new webpack entry point. Such files are build artifacts and we don't want to keep them
 in the repo.
 
+## Passing data from the server to the Elm app is done through HTML `data` attributes
+
+First the server puts the data into the view through the `data` attribute of the node in which
+the Elm app is embedded in. Then the JS file reads the `data` tag – usually by using `jQuery.data`,
+since it automatically parses the JSON string in the `data` attribute to a JS object.
+
+Then the JS file passes the JS object as flags to the Elm app and that's it.
+
 # Compiling the Elm app
 
 You can compile all Elm apps by issuing the following command:

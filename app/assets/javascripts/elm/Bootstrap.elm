@@ -6,6 +6,9 @@ module Bootstrap
         , inputWithOptions
         , defaultInputOptions
         , InputOptions
+        , selectWithOptions
+        , defaultSelectOptions
+        , SelectOptions
         )
 
 {-| This module aims to reduce the amount of boilerplate one has to write while working
@@ -176,3 +179,75 @@ it generates forms.
 input : List (Attribute msg) -> Html msg
 input =
     inputWithOptions defaultInputOptions
+
+
+
+-- Select
+
+
+{-| A record representing the select-specific features.
+For now it supports only the placeholder option. See `selectWithOptions` docs for more details.
+
+`placeholder` is implemented as `Maybe String` instead of `String`, because it's totally okay
+to have an empty string as a placeholder value.
+-}
+type alias SelectOptions =
+    { placeholder : Maybe String
+    }
+
+
+defaultSelectOptions : SelectOptions
+defaultSelectOptions =
+    { placeholder = Nothing
+    }
+
+
+placeholderOption : Maybe String -> Maybe (Html msg)
+placeholderOption =
+    -- For the explanation behind using `attribute` instead of `value` for the placeholder,
+    -- see https://github.com/elm-lang/html/issues/91.
+    Maybe.map <| \placeholder -> option [ attribute "value" "" ] [ text placeholder ]
+
+
+{-| A wrapper for the select field which makes it easier to work with this tag in Bootstrap.
+As of now it only supports the placeholder option, inspired by Rails `select_tag`.
+
+`selectWithOptions` requires you to specify all the options upfront. To cope with that, you may want
+to use the `defaultSelectOptions` record in order to specify only the options you need:
+
+    Bootstrap.selectWithOptions
+        { defaultSelectOptions
+            | placeholder = "Please choose an option"
+        }
+        -- Rest of the arguments for `selectWithOptions`.
+
+Please note that `defaultSelectOptions` needs to be an unqualified import in your module since
+Elm doesn't allow qualified names in record update syntax. [1]
+
+    import Bootstrap exposing (defaultSelectOptions)
+
+[1] https://github.com/elm-lang/elm-plans/issues/16
+-}
+selectWithOptions : SelectOptions -> List (Attribute msg) -> List (Html msg) -> Html msg
+selectWithOptions selectOptions attributes rawChildren =
+    let
+        attributesToOverwrite =
+            [ class "form-control" ]
+
+        -- Elm parses the list of attributes left to right. It means that if we have two
+        -- attributes for the "id" attribute, the last one is going to overwrite the previous ones.
+        overwrittenAttributes =
+            attributes ++ attributesToOverwrite
+
+        placeholder =
+            placeholderOption selectOptions.placeholder
+
+        children =
+            case placeholder of
+                Just placeholderOption ->
+                    placeholderOption :: rawChildren
+
+                Nothing ->
+                    rawChildren
+    in
+        Html.select overwrittenAttributes children

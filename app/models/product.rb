@@ -8,6 +8,15 @@ class Product < ApplicationRecord
   validates :item_quantity, numericality: { greater_than: 0, only_integer: true }
   validate :options_are_in_valid_format
 
+  # In a real application we'd keep this logic in a separate class.
+  def serialize_for_order_form
+    serializable_hash(only: %i(id name))
+  end
+
+  def self.serialize_for_order_form
+    all.map(&:serialize_for_order_form)
+  end
+
   private
 
   def options_are_in_valid_format

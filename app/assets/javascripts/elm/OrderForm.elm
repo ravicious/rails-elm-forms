@@ -7,15 +7,16 @@ import Html.Events exposing (..)
 
 -- Our imports
 
-import Bootstrap exposing (defaultInputOptions)
+import Bootstrap exposing (defaultInputOptions, defaultSelectOptions)
 
 
-main : Program Never Model Msg
+main : Program Flags Model Msg
 main =
-    Html.beginnerProgram
-        { model = init
+    Html.programWithFlags
+        { init = init
         , view = view
         , update = update
+        , subscriptions = \_ -> Sub.none
         }
 
 
@@ -28,22 +29,41 @@ type alias Form =
     , unitPrice : String
     , customerName : String
     , customerEmail : String
+    , product : String
     }
+
+
+type alias Product =
+    { id : Int
+    , name : String
+    }
+
+
+type alias Flags =
+    { products : List Product }
 
 
 type alias Model =
-    { form : Form }
-
-
-init : Model
-init =
-    { form =
-        { quantity = ""
-        , unitPrice = ""
-        , customerName = ""
-        , customerEmail = ""
-        }
+    { form : Form
+    , flags : Flags
     }
+
+
+init : Flags -> ( Model, Cmd Msg )
+init flags =
+    let
+        model =
+            { form =
+                { quantity = ""
+                , unitPrice = ""
+                , customerName = ""
+                , customerEmail = ""
+                , product = ""
+                }
+            , flags = flags
+            }
+    in
+        ( model, Cmd.none )
 
 
 
@@ -55,9 +75,10 @@ type Msg
     | UpdateUnitPrice String
     | UpdateCustomerName String
     | UpdateCustomerEmail String
+    | UpdateProduct String
 
 
-update : Msg -> Model -> Model
+update : Msg -> Model -> ( Model, Cmd Msg )
 update msg ({ form } as model) =
     case msg of
         UpdateQuantity quantity ->
@@ -65,28 +86,35 @@ update msg ({ form } as model) =
                 updatedForm =
                     { form | quantity = quantity }
             in
-                { model | form = updatedForm }
+                ( { model | form = updatedForm }, Cmd.none )
 
         UpdateUnitPrice unitPrice ->
             let
                 updatedForm =
                     { form | unitPrice = unitPrice }
             in
-                { model | form = updatedForm }
+                ( { model | form = updatedForm }, Cmd.none )
 
         UpdateCustomerName customerName ->
             let
                 updatedForm =
                     { form | customerName = customerName }
             in
-                { model | form = updatedForm }
+                ( { model | form = updatedForm }, Cmd.none )
 
         UpdateCustomerEmail customerEmail ->
             let
                 updatedForm =
                     { form | customerEmail = customerEmail }
             in
-                { model | form = updatedForm }
+                ( { model | form = updatedForm }, Cmd.none )
+
+        UpdateProduct productIdAsString ->
+            let
+                updatedForm =
+                    { form | product = productIdAsString }
+            in
+                ( { model | form = updatedForm }, Cmd.none )
 
 
 
@@ -98,6 +126,31 @@ view model =
     div []
         [ Html.form []
             [ div
+                [ class "row" ]
+                [ div [ class "col-md-3" ]
+                    [ Bootstrap.formGroup "order" "product" <|
+                        \fieldId fieldName ->
+                            [ Bootstrap.label fieldId "Product"
+                            , Bootstrap.selectWithOptions
+                                { defaultSelectOptions
+                                    | placeholder = Just "Choose the product"
+                                }
+                                [ id fieldId
+                                , name fieldName
+                                , onInput UpdateProduct
+                                , required True
+                                ]
+                              <|
+                                List.map
+                                    (\product ->
+                                        option [ value (toString product.id) ]
+                                            [ text product.name ]
+                                    )
+                                    model.flags.products
+                            ]
+                    ]
+                ]
+            , div
                 [ class "row" ]
                 [ div [ class "col-md-3" ]
                     [ Bootstrap.formGroup "order" "quantity" <|
